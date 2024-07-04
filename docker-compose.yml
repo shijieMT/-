@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: notify
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/db.sql:/docker-entrypoint-initdb.d/db.sql:ro
+
+  notify-api:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+
+volumes:
+  db_data:

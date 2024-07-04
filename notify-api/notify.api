@@ -1,0 +1,91 @@
+syntax = "v1"
+
+// 2024/7/3
+// shijieMT@163.com
+type Notice {
+	// 创建者ID
+	userID int `json:"userId"`
+	// 提醒内容
+	content string `json:"content"`
+	// 提醒时间
+	notifyTime int64 `json:"notifyTime"`
+}
+
+//
+type SetNoticeRequest {
+	Token  string `json:"token"`
+	Notice Notice `json:"notice"`
+}
+
+type SetNoticeResponse {}
+
+//
+type GetNoticeListRequest {
+	Token string `json:"token"`
+}
+
+type GetNoticeListResponse {
+	NoticeList []Notice `json:"noticeList"`
+}
+
+//
+type DeleteNoticeRequest {
+	Token string `json:"token"`
+	Id    int    `json:"id"`
+}
+
+type DeleteNoticeResponse {}
+
+//
+type UpdateNoticeRequest {
+	Token  string `json:"token"`
+	Id    int    `json:"id"`
+	Notice Notice `json:"notice"`
+}
+
+type UpdateNoticeResponse {}
+
+//
+type LoginInRequest {
+	userID string `json:"userId"`
+	Password string `json:"password"`
+}
+
+type LoginInResponse {
+	Token string `json:"token"`
+}
+
+//
+type WSNoticeRequest {
+	Token string `json:"token"`
+}
+
+type WSNoticeResponse {}
+
+service notify {
+	@handler setNotice
+	put /api/setNotice (SetNoticeRequest) returns (SetNoticeResponse)
+
+	@handler getNoticeList
+	get /api/getNoticeList (GetNoticeListRequest) returns (GetNoticeListResponse)
+
+	@handler deleteNotice
+	delete /api/deleteNotice (DeleteNoticeRequest) returns (DeleteNoticeResponse)
+
+	@handler updateNotice
+	put /api/updateNotice (UpdateNoticeRequest) returns (UpdateNoticeResponse)
+
+	@handler loginIn
+	get /api/loginIn (LoginInRequest) returns (LoginInResponse)
+
+	@handler WSNotice
+	get /api/WSNotice (WSNoticeRequest) returns (WSNoticeResponse)
+} // goctl api go -api chat_api.api -dir . --home ../../template
+
+//setNotice
+//getNoticeList
+//deleteNotice
+//updateNotice
+//loginIn
+//WSNotice
+// goctl api go -api .\notify.api -dir .
